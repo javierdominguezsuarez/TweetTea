@@ -1,6 +1,9 @@
 const Pallete = {
-    primary : "1F1B24",
-    secondary : "121212"
+    secondary: "#2A2E32",
+    primary : "#212529",
+    textPrimary : 'white',
+    textSecondary : '#9e9e9e',
+    mainColor : '#BB86FC'
 
 }
 

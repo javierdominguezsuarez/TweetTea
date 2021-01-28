@@ -5,9 +5,10 @@ import { Col, Container, Form } from 'react-bootstrap';
 import { AiFillPicture } from "react-icons/ai";
 import WriteTweet from './Components/WriteTweet';
 import Tweet from './Components/Tweet';
+import Pallete from './Components/Pallete';
 function App() {
   return (
-    <div className="App">
+    <div className="App" style={{backgroundColor : Pallete.primary}}>
       <div className="container p-4">
         <WriteTweet></WriteTweet>
 
