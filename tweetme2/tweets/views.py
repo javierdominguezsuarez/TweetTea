@@ -3,6 +3,8 @@ from django.http.response import Http404, HttpResponse, JsonResponse
 from django.shortcuts import render
 
 # Create your views here.
+from rest_framework.decorators import api_view  
+from rest_framework.response import Response
 from .models import Tweet
 from .forms import TweetForm
 from .serializers import TweetSerializer, serializers
@@ -10,7 +12,7 @@ def home_view(request, *args, **kwargs):
     #return HttpResponse("<h1>Hellow World</h1>")
     return render (request,"pages/home.html", context = {}, status = 200)
 
-def tweet_detail_view(request, tweet_id, *args , **kwargs):
+def tweet_detail_view_old(request, tweet_id, *args , **kwargs):
     """
     REST API VIEW 
     Consume by JavaScript  
@@ -29,8 +31,22 @@ def tweet_detail_view(request, tweet_id, *args , **kwargs):
         status = 404
     return JsonResponse(data, status = status)
 
+@api_view(['GET'])
+def tweet_detail_view (request,tweet_id,  *args, **kwargs):
+    obj = Tweet.objects.get(id = tweet_id)
+    if not obj.exists():
+        return Response({}, status = 404)
+    obj = obj.first()
+    serializer = TweetSerializer(obj)
+    return Response(serializer.data, status = 200)
 
+@api_view(['GET'])
 def tweet_list_view (request, *args, **kwargs):
+    tweet_list = Tweet.objects.all()
+    serializer = TweetSerializer(tweet_list, many = True)
+    return Response(serializer.data, status = 200)
+
+def tweet_list_view_old (request, *args, **kwargs):
     """
     REST API VIEW 
     Consume by JavaScript  
@@ -44,20 +60,21 @@ def tweet_list_view (request, *args, **kwargs):
     }
     return JsonResponse(data_list,safe= False)
 
+@api_view(['POST'])
 def tweet_create_view (request,*args,**kwargs):
     """
     REST API CREATE VIEW 
     """
     serializer = TweetSerializer(data = request.POST or None)
     if serializer.is_valid():
-        obj =serializer.save(user = request.user)
-        return JsonResponse(serializer.data, status = 201)  
+        serializer.save(user = request.user)
+        return Response(serializer.data, status = 201)  
 
-    return JsonResponse({}, status = 400)
+    return Response({}, status = 400)
 
 
 
-def tweet_create_view_caca (request, *args, **kwargs):
+def tweet_create_view_old (request, *args, **kwargs):
     """
     REST API CREATE VIEW 
     """
