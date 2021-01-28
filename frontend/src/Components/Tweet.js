@@ -3,7 +3,7 @@ import { Col } from 'react-bootstrap'
 import { AiOutlineHeart, AiFillHeart, AiOutlineRetweet } from "react-icons/ai";
 import Pallete from './Pallete'
 
-export default function Tweet() {
+export default function Tweet({obj}) {
     return (
         <Col sm = {100} className="p-3 mt-3 text-left" style={{backgroundColor : Pallete.secondary, borderRadius: 10 }}>
 
@@ -15,7 +15,7 @@ export default function Tweet() {
                 <p className="ml-3 mt-2" style={{color: Pallete.textSecondary}}>@josepenaseco</p>
             </div>
             <p class="mt-2" style={{fontFamily: "Poppins", color: Pallete.textPrimary}}>
-                Hello world me encanta este puto twitter
+                {obj.content}
             </p>
 
             <div>
