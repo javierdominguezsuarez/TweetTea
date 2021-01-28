@@ -84,9 +84,9 @@ def tweet_create_view (request,*args,**kwargs):
     """
     REST API CREATE VIEW 
     """
-    serializer = TweetSerializer(data = request.data or None)
+    serializer = TweetSerializer(data = request.data )
     if serializer.is_valid():
-        serializer.save(user = request.user)
+        serializer.save()
         return Response(serializer.data, status = 201)  
 
     return Response({"Error" : "Invalid content"}, status = 400)
