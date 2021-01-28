@@ -1,9 +1,11 @@
+from django.http import request
 from django.http.response import Http404, HttpResponse, JsonResponse
 from django.shortcuts import render
 
 # Create your views here.
 from .models import Tweet
 from .forms import TweetForm
+from .serializers import TweetSerializer, serializers
 def home_view(request, *args, **kwargs):
     #return HttpResponse("<h1>Hellow World</h1>")
     return render (request,"pages/home.html", context = {}, status = 200)
@@ -42,7 +44,23 @@ def tweet_list_view (request, *args, **kwargs):
     }
     return JsonResponse(data_list,safe= False)
 
-def tweet_create_view (request, *args, **kwargs):
+def tweet_create_view (request,*args,**kwargs):
+    """
+    REST API CREATE VIEW 
+    """
+    serializer = TweetSerializer(data = request.POST or None)
+    if serializer.is_valid():
+            obj =serializer.save(user = request.user)
+          
+
+    return JsonResponse({}, status = 400)
+
+
+
+def tweet_create_view_caca (request, *args, **kwargs):
+    """
+    REST API CREATE VIEW 
+    """
     form = TweetForm(request.POST or None)
     if form.is_valid():
         obj = form.save(commit = False)
