@@ -67,7 +67,6 @@ def tweet_detail_view (request,tweet_id,  *args, **kwargs):
     obj = Tweet.objects.get(id = tweet_id)
     if not obj.exists():
         return Response({}, status = 404)
-    obj = obj.first()
     serializer = TweetSerializer(obj)
     return Response(serializer.data, status = 200)
 
@@ -85,8 +84,9 @@ def tweet_create_view (request,*args,**kwargs):
     REST API CREATE VIEW 
     """
     serializer = TweetSerializer(data = request.data )
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status = 201)  
+    #raise_exception devuelve un json con el error si lo hubiera
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    return Response(serializer.data, status = 201)  
 
-    return Response({"Error" : "Invalid content"}, status = 400)
+    #return Response({"Error" : "Invalid content"}, status = 400)
