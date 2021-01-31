@@ -6,3 +6,4 @@ class AppBaseModel (models.Model):
     hour = models.TimeField("Time of publication", auto_now_add=True)
     class Meta :
         abstract = True
+        ordering = ['-pub','-hour']

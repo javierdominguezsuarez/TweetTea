@@ -3,10 +3,11 @@ from django.http.response import Http404, HttpResponse, JsonResponse
 from django.shortcuts import render
 
 # Create your views here.
-from rest_framework.decorators import api_view  
+from rest_framework.decorators import api_view, permission_classes  
 from rest_framework.response import Response
 from .models import Tweet
 from .forms import TweetForm
+from rest_framework.permissions import IsAuthenticated
 from .serializers import TweetSerializer, serializers
 
 def home_view(request, *args, **kwargs):
@@ -79,6 +80,7 @@ def tweet_list_view (request, *args, **kwargs):
 
 
 @api_view(['POST'])
+#@permission_classes([IsAuthenticated])
 def tweet_create_view (request,*args,**kwargs):
     """
     REST API CREATE VIEW 
@@ -90,3 +92,12 @@ def tweet_create_view (request,*args,**kwargs):
     return Response(serializer.data, status = 201)  
 
     #return Response({"Error" : "Invalid content"}, status = 400)
+
+   
+@api_view(['DELETE'])
+#@permission_classes([IsAuthenticated])
+def tweet_delete_view (request,tweet_id,  *args, **kwargs):
+    obj = Tweet.objects.get(id = tweet_id)
+    obj.delete()
+    #obj =  = obj.filter(user = request.user)
+    return Response({"message":  "Tweet removed"}, status = 200)
