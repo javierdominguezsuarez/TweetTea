@@ -1,11 +1,12 @@
+from django.conf import settings
 from django.http import request
 from django.http.response import Http404, HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 # Create your views here.
 from rest_framework.decorators import api_view, permission_classes  
 from rest_framework.response import Response
-from .models import Tweet
+from .models import Tweet, User
 from .forms import TweetForm
 from rest_framework.permissions import IsAuthenticated
 from .serializers import TweetSerializer, serializers
@@ -80,7 +81,8 @@ def tweet_list_view (request, *args, **kwargs):
 
 
 @api_view(['POST'])
-#@permission_classes([IsAuthenticated])
+#comprueba que el usuario tenga credenciales
+@permission_classes([IsAuthenticated])
 def tweet_create_view (request,*args,**kwargs):
     """
     REST API CREATE VIEW 
@@ -95,9 +97,15 @@ def tweet_create_view (request,*args,**kwargs):
 
    
 @api_view(['DELETE'])
-#@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def tweet_delete_view (request,tweet_id,  *args, **kwargs):
     obj = Tweet.objects.get(id = tweet_id)
+    if not obj.exists():
+        return Response({}, status = 404)
+    us = obj.filter(user = request.user)
+    if not us.exists():
+        return Response({"message": "You cannot delete "}, status = 401)
+    
     obj.delete()
-    #obj =  = obj.filter(user = request.user)
+    
     return Response({"message":  "Tweet removed"}, status = 200)
