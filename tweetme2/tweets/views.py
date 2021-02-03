@@ -1,22 +1,21 @@
 from django.conf import settings
 from django.http import request
-from django.http.response import Http404, HttpResponse, JsonResponse
-from django.shortcuts import redirect, render
-
-# Create your views here.
+from django.http.response import JsonResponse
+from django.shortcuts import  render
+from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes  
 from rest_framework.response import Response
-from .models import Tweet, User
+from .models import Tweet, User,Profile
 from .forms import TweetForm
 from rest_framework.permissions import IsAuthenticated
-from .serializers import TweetSerializer, serializers
-
-def home_view(request, *args, **kwargs):
-    #return HttpResponse("<h1>Hellow World</h1>")
-    return render (request,"pages/home.html", context = {}, status = 200)
+from .serializers import TweetSerializer
+from rest_framework import viewsets
+from django.contrib.auth import get_user_model
+########################################################################
 
 #Using old django
-
+def home_view(request, *args, **kwargs):
+    return render (request,"pages/home.html", context = {}, status = 200)
 
 def tweet_detail_view_old(request, tweet_id, *args , **kwargs):
     """
@@ -61,6 +60,7 @@ def tweet_create_view_old (request, *args, **kwargs):
         obj.save()
         form = TweetForm()
     return render(request, 'components/forms.html', context = {"form" : form})
+#################################################################################
 
 # Using django rest framework
 
@@ -109,3 +109,31 @@ def tweet_delete_view (request,tweet_id,  *args, **kwargs):
     obj.delete()
     
     return Response({"message":  "Tweet removed"}, status = 200)
+
+ #########################################################################
+    
+#viewSetsImplementation
+
+authenticatedActions = ['create','update','partial_update','destroy']
+class TweetViewSet(viewsets.ModelViewSet):
+    serializer_class = TweetSerializer
+    queryset = Tweet.objects.all()
+
+    def get_permissions(self):
+        if self.action in authenticatedActions:
+            self.permission_classes =[permissions.IsAuthenticated]
+        else :
+            self.permission_classes = [permissions.AllowAny]
+        return super().get_permissions()
+
+    def get_queryset(self):
+        try:
+            profile =  Profile.objects.filter(user = self.request.user.id)
+            pro = profile.first()
+            following = pro.followers.all()
+            users = [i.user.id  for i in  following]
+            return Tweet.objects.filter( user__in = users)
+        except: 
+            return Tweet.objects.all()
+
+        

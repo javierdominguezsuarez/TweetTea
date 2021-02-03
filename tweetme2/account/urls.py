@@ -1,8 +1,8 @@
+from rest_framework import viewsets
 from .views import ProfileAPI, RegisterAPI
 from django.urls import path
 from knox import views as knox_views
 from .views import LoginAPI
-
 urlpatterns = [
     path('register/', RegisterAPI.as_view(), name='register'),
     path('login/', LoginAPI.as_view(), name='login'),

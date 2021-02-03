@@ -1,6 +1,7 @@
+from account.models import Profile
 from django.db import models
 from django.db.models.deletion import CASCADE
-from django.db.models.fields import TextField
+from django.db.models.fields import DateField, TextField
 from rest_framework.serializers import ModelSerializer
 from utils.models import AppBaseModel
 from django.conf import settings
@@ -11,10 +12,19 @@ User = get_user_model()
 class TweetManager(models.Manager):
     def tweet_count(self):
         print("hellow word")
+class TweetLike(models.Model):
+    profile = models.ForeignKey("account.Profile",on_delete= CASCADE)  
+    tweet = models.ForeignKey("Tweet",on_delete=models.CASCADE)  
+    pub = models.DateField(auto_now_add=True)
+class Retweet(models.Model):
+    profile = models.ForeignKey("account.Profile",on_delete= CASCADE,related_name ='rprofile')  
+    tweet = models.ForeignKey("Tweet",on_delete=models.CASCADE,related_name ='rtweet' )  
+    pub = models.DateField(auto_now_add=True)
 class Tweet (AppBaseModel):
     objects = TweetManager()
     user = models.ForeignKey(User,on_delete=models.CASCADE )
     content = models.TextField(blank = False, null =False)
     image = models.FileField(upload_to='images/',blank= True , null = True)
-    #likes = models.ManyToManyField(User, related_name='tweet_user')
+    likes = models.ManyToManyField("account.Profile",related_name='like',blank= True)
+    retweets = models.ManyToManyField("account.Profile",related_name='retweet',blank= True)
     

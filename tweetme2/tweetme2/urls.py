@@ -14,17 +14,23 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf.urls import include
+from tweets.views import TweetViewSet
 from tweets.views import home_view
-from tweets.views import tweet_detail_view, tweet_list_view, tweet_create_view,tweet_delete_view
+#from tweets.views import tweet_detail_view, tweet_list_view, tweet_create_view,tweet_delete_view
 from django.contrib import admin
 from django.urls import path
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register('tweets', TweetViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home/', home_view),
-    path('tweets/',tweet_list_view),
-    path('write/',tweet_create_view),
-    path('tweets/<int:tweet_id>',tweet_detail_view),
-    path('tweets/<int:tweet_id>/delete',tweet_delete_view),
+    path('', home_view),
+    #path('tweets/',tweet_list_view),
+    #path('write/',tweet_create_view),
+    #path('tweets/<int:tweet_id>',tweet_detail_view),
+    #path('tweets/<int:tweet_id>/delete',tweet_delete_view),
     path("auth/", include("account.urls")),
+    path('apiv2/', include(router.urls)),
 ]
