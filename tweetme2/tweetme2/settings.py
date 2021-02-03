@@ -20,18 +20,16 @@ MAX_LENGTH = 240
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'tweetteadevelop@gmail.com'
-EMAIL_HOST_PASSWORD ='Tweet-Tea-1'
+
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = '/account/serializers.py' 
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL  = 'tweetteadevelop@gmail.com'
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'w__d%1v(-ya7_&0d*r^=ty4j!(ps5hao!#c@la6_og-labqzzz'
+
 
 ANYMAIL = {
     'WEBHOOK_SECRET': '<a random string>:<another random string>',
