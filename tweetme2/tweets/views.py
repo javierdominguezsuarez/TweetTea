@@ -1,16 +1,15 @@
-from django.conf import settings
-from django.http import request
+
 from django.http.response import JsonResponse
 from django.shortcuts import  render
-from rest_framework import permissions, serializers
+from rest_framework import permissions
 from rest_framework.decorators import action, api_view, permission_classes  
 from rest_framework.response import Response
-from .models import Tweet, TweetLike, User,Profile
+from .models import Tweet, TweetLike
 from .forms import TweetForm
 from rest_framework.permissions import IsAuthenticated
 from .serializers import TweetSerializer
 from rest_framework import viewsets
-from django.contrib.auth import get_user_model
+from account.models import Profile
 ########################################################################
 
 #Using old django

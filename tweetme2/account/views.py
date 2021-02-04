@@ -1,11 +1,6 @@
-from django.http import request
-from rest_framework.serializers import Serializer
+
 from account.models import Profile
-from email.message import EmailMessage
-from django.core import mail
-from django.shortcuts import render
 from rest_framework import generics, permissions
-from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from knox.models import AuthToken
 from rest_framework.views import APIView

@@ -1,4 +1,4 @@
-from account.models import Profile
+
 from django.db import models
 from django.db.models.deletion import CASCADE
 from django.db.models.fields import DateField, TextField
@@ -12,7 +12,7 @@ User = get_user_model()
 class TweetManager(models.Manager):
     def tweet_count(self):
         print("hellow word")
-        
+
 class TweetLike(models.Model):
     profile = models.ForeignKey("account.Profile",on_delete= CASCADE)  
     tweet = models.ForeignKey("Tweet",on_delete=models.CASCADE)  

@@ -1,6 +1,7 @@
 
 from rest_framework import serializers
 from .models import Tweet, TweetLike
+
 MAX_LENGTH = 240
 class TweetSerializer(serializers.ModelSerializer):
     likes_count = serializers.SerializerMethodField('get_likes')
