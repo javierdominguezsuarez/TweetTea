@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from tweets.views import tweet_detail_view
 from django.conf.urls import include
 from tweets.views import TweetViewSet
 from tweets.views import home_view
@@ -27,6 +28,7 @@ router.register('tweets', TweetViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view),
-    path("auth/", include("account.urls")),
+    #path('tweets/<int:tweet_id>',tweet_detail_view),
+    path("apiv2/", include("account.urls")),
     path('apiv2/', include(router.urls)),
 ]

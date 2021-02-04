@@ -1,4 +1,5 @@
 from django.http import request
+from rest_framework.serializers import Serializer
 from account.models import Profile
 from email.message import EmailMessage
 from django.core import mail
@@ -69,3 +70,12 @@ class ProfileAPI(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status = 201)  
+    
+class ListProfiles(APIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+    def get(self,request,*args, **kwargs):
+        profiles = Profile.objects.all()
+        serializer = ProfileSerializer(profiles,many = True)
+        return Response(serializer.data,status = 200)

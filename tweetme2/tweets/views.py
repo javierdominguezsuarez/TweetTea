@@ -2,10 +2,10 @@ from django.conf import settings
 from django.http import request
 from django.http.response import JsonResponse
 from django.shortcuts import  render
-from rest_framework import permissions
-from rest_framework.decorators import api_view, permission_classes  
+from rest_framework import permissions, serializers
+from rest_framework.decorators import action, api_view, permission_classes  
 from rest_framework.response import Response
-from .models import Tweet, User,Profile
+from .models import Tweet, TweetLike, User,Profile
 from .forms import TweetForm
 from rest_framework.permissions import IsAuthenticated
 from .serializers import TweetSerializer
@@ -136,4 +136,23 @@ class TweetViewSet(viewsets.ModelViewSet):
         except: 
             return Tweet.objects.all()
 
+    @action (detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
+    def retweet (self,request, tId):
+        try :
+            userRetweet = self.request.user
+            tweet = Tweet.objects.filter(id = tId)
+            Tweet.objects.create(user = self.request.user, content = tweet.first().content)
+        except :
+            return Response({"error":"no se ha podido hacer el retweet"},404)
+    
+    @action (detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
+    def like (self,request, tId):
+        try :
+            
+            profile =  Profile.objects.filter(user = self.request.user.id)
+            pro = profile.first()
+            tweetDos = Tweet.objects.filter(id = tId).first()
+            TweetLike.objects.create(profile = pro, tweet = tweetDos )
+        except :
+            return Response({"error":"no se ha podido hacer like"},404)
         

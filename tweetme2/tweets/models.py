@@ -12,14 +12,17 @@ User = get_user_model()
 class TweetManager(models.Manager):
     def tweet_count(self):
         print("hellow word")
+        
 class TweetLike(models.Model):
     profile = models.ForeignKey("account.Profile",on_delete= CASCADE)  
     tweet = models.ForeignKey("Tweet",on_delete=models.CASCADE)  
     pub = models.DateField(auto_now_add=True)
+
 class Retweet(models.Model):
     profile = models.ForeignKey("account.Profile",on_delete= CASCADE,related_name ='rprofile')  
     tweet = models.ForeignKey("Tweet",on_delete=models.CASCADE,related_name ='rtweet' )  
     pub = models.DateField(auto_now_add=True)
+
 class Tweet (AppBaseModel):
     objects = TweetManager()
     user = models.ForeignKey(User,on_delete=models.CASCADE )

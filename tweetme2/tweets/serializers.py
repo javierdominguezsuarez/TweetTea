@@ -1,6 +1,6 @@
 
 from rest_framework import serializers
-from .models import Tweet
+from .models import Tweet, TweetLike
 MAX_LENGTH = 240
 class TweetSerializer(serializers.ModelSerializer):
     likes_count = serializers.SerializerMethodField('get_likes')
@@ -12,10 +12,13 @@ class TweetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tweet
-        fields = ['user','content', 'pub','hour','likes_count','retweets_count']
+        fields = ['id','user','content', 'pub','hour','likes_count','retweets_count']
 
     def validate_content(self, text):
         if len(text)> MAX_LENGTH:
             raise serializers.ValidationError("Too long tweet")
         return text
-   
+class TweetLikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TweetLike
+        fields = ['id','user','tweet']
