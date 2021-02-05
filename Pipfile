@@ -14,6 +14,7 @@ django-extensions = "*"
 knox = "*"
 cryptography = "*"
 jinja2 = "*"
+boto3 = "*"
 
 [dev-packages]
 
