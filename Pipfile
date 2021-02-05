@@ -10,6 +10,7 @@ django-cors-headers = "*"
 requests = "*"
 gunicorn = "*"
 waitress = "*"
+django-extensions = "*"
 
 [dev-packages]
 
