@@ -12,6 +12,7 @@ gunicorn = "*"
 waitress = "*"
 django-extensions = "*"
 knox = "*"
+cryptography = "*"
 
 [dev-packages]
 
