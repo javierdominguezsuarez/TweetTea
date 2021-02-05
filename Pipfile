@@ -13,6 +13,7 @@ waitress = "*"
 django-extensions = "*"
 knox = "*"
 cryptography = "*"
+jinja2 = "*"
 
 [dev-packages]
 
