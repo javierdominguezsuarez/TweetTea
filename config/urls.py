@@ -1,5 +1,6 @@
 """tweetme2 URL Configuration
 """
+from account.views import ProfileViewSet
 from django.conf.urls import include
 from tweets.views import TweetViewSet
 from tweets.views import home_view
@@ -9,10 +10,14 @@ from django.urls import path
 from rest_framework import routers
 
 router = routers.DefaultRouter()
+router2 = routers.DefaultRouter()
+
 router.register('tweets', TweetViewSet)
+router2.register('profiles', ProfileViewSet)
 api = [
     path('', include('account.urls')),
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path('',include(router2.urls))
     ]
 
 urlpatterns = [

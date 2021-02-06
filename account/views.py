@@ -89,10 +89,14 @@ class ProfileViewSet(viewsets.ModelViewSet):
         return super().get_permissions()
 
     def get_queryset(self):
-        profiles = Profile.objects.all()
-        serializer = ProfileSerializer(profiles,many = True)
-        return Response(serializer.data,status = 200)
-        
+        try:
+            profile =  Profile.objects.filter(user = self.request.user.id)
+            pro = profile.first()
+            following = pro.followers.all()
+            return following
+        except: 
+            return Profile.objects.all()
+
     @action (detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
     def follow (self,request, pId):
         try :

@@ -62,6 +62,6 @@ class ProfileSerializer(serializers.ModelSerializer):
         return obj.following.all().count()
     class Meta:
         model = Profile
-        fields = ('user','pub','bio', 'location','image','following_count','followers_count')
+        fields = ('user','pub','bio', 'location','image','following_count','followers_count','following')
     
    
