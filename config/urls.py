@@ -10,10 +10,13 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register('tweets', TweetViewSet)
+api = [
+    path('', include('account.urls')),
+    path('', include(router.urls))
+    ]
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view),
-    path("apiv2/", include("account.urls")),
-    path('apiv2/', include(router.urls)),
+    path('v1/',include(api))
 ]

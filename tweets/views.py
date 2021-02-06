@@ -113,13 +113,13 @@ def tweet_delete_view (request,tweet_id,  *args, **kwargs):
     
 #viewSetsImplementation
 
-authenticatedActions = ['create','update','partial_update','destroy']
+
 class TweetViewSet(viewsets.ModelViewSet):
     serializer_class = TweetSerializer
     queryset = Tweet.objects.all()
-
+    authenticatedActions = ['create','update','partial_update','destroy']
     def get_permissions(self):
-        if self.action in authenticatedActions:
+        if self.action in self.authenticatedActions:
             self.permission_classes =[permissions.IsAuthenticated]
         else :
             self.permission_classes = [permissions.AllowAny]
@@ -151,7 +151,8 @@ class TweetViewSet(viewsets.ModelViewSet):
             profile =  Profile.objects.filter(user = self.request.user.id)
             pro = profile.first()
             tweetDos = Tweet.objects.filter(id = tId).first()
-            TweetLike.objects.create(profile = pro, tweet = tweetDos )
+            like = TweetLike.objects.create(profile = pro, tweet = tweetDos )
+            tweetDos.add(like)
         except :
             return Response({"error":"no se ha podido hacer like"},404)
         

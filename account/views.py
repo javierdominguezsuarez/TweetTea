@@ -1,6 +1,7 @@
 
-from account.models import Profile
-from rest_framework import generics, permissions
+from rest_framework.decorators import action
+from account.models import FollowerRelation, Profile
+from rest_framework import generics, permissions, viewsets
 from rest_framework.response import Response
 from knox.models import AuthToken
 from rest_framework.views import APIView
@@ -74,3 +75,31 @@ class ListProfiles(APIView):
         profiles = Profile.objects.all()
         serializer = ProfileSerializer(profiles,many = True)
         return Response(serializer.data,status = 200)
+
+
+class ProfileViewSet(viewsets.ModelViewSet):
+    serializer_class = ProfileSerializer
+    queryset = Profile.objects.all()
+    authenticatedActions = ['create','update','partial_update','destroy']
+    def get_permissions(self):
+        if self.action in self.authenticatedActions:
+            self.permission_classes =[permissions.IsAuthenticated]
+        else :
+            self.permission_classes = [permissions.AllowAny]
+        return super().get_permissions()
+
+    def get_queryset(self):
+        profiles = Profile.objects.all()
+        serializer = ProfileSerializer(profiles,many = True)
+        return Response(serializer.data,status = 200)
+        
+    @action (detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
+    def follow (self,request, pId):
+        try :
+            user = self.request.user
+            profile = Profile.objects.get(user = user)
+            profileToFollow = Profile.objects.filter(id = pId).first()
+            #FollowerRelation.objects.create(profile = profileToFollow)
+            profile.followers.add(profileToFollow)
+        except :
+            return Response({"error":"no se ha podido hacer el follow"},404)
