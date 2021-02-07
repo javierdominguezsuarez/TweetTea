@@ -17,6 +17,7 @@ jinja2 = "*"
 boto3 = "*"
 django-rest-knox = "*"
 dj-database-url = "*"
+psycopg2 = "*"
 
 [dev-packages]
 
