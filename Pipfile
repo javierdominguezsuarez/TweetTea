@@ -16,7 +16,7 @@ cryptography = "*"
 jinja2 = "*"
 boto3 = "*"
 django-rest-knox = "*"
-importlib = "*"
+
 dj-database-url = "*"
 
 [dev-packages]
