@@ -36,7 +36,7 @@ ANYMAIL = {
 }
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 LOGIN_URL = "/login"
 ALLOWED_HOSTS = ["*"]
 
