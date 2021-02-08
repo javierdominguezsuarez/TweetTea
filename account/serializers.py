@@ -27,18 +27,18 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.first_name = validated_data['first_name']
         user.last_name = validated_data['last_name']
         #user.is__active= False
-        connection = mail.get_connection()
+        #connection = mail.get_connection()
         # Manually open the connection
-        connection.open()
-        emailtry = EmailMessage(
-            'Activate your account',
-            'Confirm your register',
-            'tweetteadevelop@gmail.com',
-            ['email'],
-        )
-        emailtry.fail_silently= False
-        emailtry.send()
-        connection.close()
+        #connection.open()
+        #emailtry = EmailMessage(
+        #    'Activate your account',
+        #    'Confirm your register',
+        #    'tweetteadevelop@gmail.com',
+        #    ['email'],
+        #)
+        #emailtry.fail_silently= False
+        #emailtry.send()
+        #connection.close()
          
         return user
     
