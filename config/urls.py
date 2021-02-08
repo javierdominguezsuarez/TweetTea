@@ -14,8 +14,8 @@ from rest_framework import routers
 router = routers.SimpleRouter()
 router2 = routers.SimpleRouter()
 
-router.register(r'tweets', TweetViewSet)
-router2.register(r'profiles', ProfileViewSet)
+router.register('tweets', TweetViewSet)
+router2.register('profiles', ProfileViewSet)
 api = [
     path('', include('account.urls')),
     path('', include(router.urls)),
