@@ -38,8 +38,8 @@ ANYMAIL = {
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 LOGIN_URL = "/login"
-ALLOWED_HOSTS = [".herokuapp.com",".herokuapps."]
-
+#ALLOWED_HOSTS = [".herokuapp.com",".herokuapps."]
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
