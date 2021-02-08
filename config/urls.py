@@ -11,11 +11,11 @@ from django.contrib import admin
 from django.urls import path
 from rest_framework import routers
 
-router = routers.DefaultRouter()
-router2 = routers.DefaultRouter()
+router = routers.SimpleRouter()
+router2 = routers.SimpleRouter()
 
-router.register('tweets', TweetViewSet)
-router2.register('profiles', ProfileViewSet)
+router.register(r'tweets', TweetViewSet)
+router2.register(r'profiles', ProfileViewSet)
 api = [
     path('', include('account.urls')),
     path('', include(router.urls)),
