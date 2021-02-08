@@ -18,28 +18,17 @@ BASE_DIR = Path(os.path.abspath(__file__)).resolve().parent.parent
 MAX_LENGTH = 240
 # envio de correos
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-
-EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-EMAIL_FILE_PATH = '/account/serializers.py' 
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL  = 'tweetteadevelop@gmail.com'
-
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'w__d%1v(-ya7_&0d*r^=ty4j!(ps5hao!#c@la6_og-labqzzz'
 
 
-ANYMAIL = {
-    'WEBHOOK_SECRET': '<a random string>:<another random string>',
-}
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 LOGIN_URL = "/login"
-#ALLOWED_HOSTS = [".herokuapp.com",".herokuapps."]
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [".herokuapp.com",".herokuapps."]
+
 
 # Application definition
 
