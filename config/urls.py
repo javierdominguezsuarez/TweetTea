@@ -1,6 +1,6 @@
 """tweetme2 URL Configuration
 """
-from django.conf import settings
+#from django.conf import settings
 from django.conf.urls.static import static
 from account.views import ProfileViewSet
 from django.conf.urls import include
@@ -28,5 +28,5 @@ urlpatterns = [
     path('v1/',include(api))
 ]
 
-#if settings.DEBUG:
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+#if settings.DEBUG == True:
+  #  urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
