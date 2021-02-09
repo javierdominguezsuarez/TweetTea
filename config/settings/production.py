@@ -25,7 +25,7 @@ SECRET_KEY = 'w__d%1v(-ya7_&0d*r^=ty4j!(ps5hao!#c@la6_og-labqzzz'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 LOGIN_URL = "/login"
 ALLOWED_HOSTS = [".herokuapp.com",".herokuapps."]
 
@@ -142,12 +142,3 @@ USE_TZ = True
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
-
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR , "static"),
-    #'/var/www/static/',
-]
-STATIC_ROOT = os.path.join((BASE_DIR),"static_cdn")
-MEDIA_ROOT = os.path.join((BASE_DIR),"media_cdn")
