@@ -18,6 +18,7 @@ boto3 = "*"
 django-rest-knox = "*"
 dj-database-url = "*"
 psycopg2 = "*"
+setuptools-rust = "*"
 
 [dev-packages]
 
