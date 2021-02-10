@@ -29,7 +29,7 @@ DEBUG = False
 LOGIN_URL = "/login"
 ALLOWED_HOSTS = ["*"]
 
-
+#hello
 # Application definition
 
 INSTALLED_APPS = [
